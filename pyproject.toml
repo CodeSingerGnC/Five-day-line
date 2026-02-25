@@ -6,8 +6,10 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "akshare>=1.18.22",
+    "fastapi",
     "matplotlib>=3.10.8",
     "mplfinance>=0.12.10b0",
+    "uvicorn",
 ]
 
 [dependency-groups]
