@@ -37,3 +37,4 @@ web/.turbo/
 web/.eslintcache
 web/.vercel/
 web/.swc/
+scripts/.pids/

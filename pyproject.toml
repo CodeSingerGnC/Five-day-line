@@ -9,6 +9,7 @@ dependencies = [
     "fastapi",
     "matplotlib>=3.10.8",
     "mplfinance>=0.12.10b0",
+    "pillow>=12.1.0",
     "uvicorn",
 ]
 

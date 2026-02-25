@@ -362,6 +362,7 @@ dependencies = [
     { name = "fastapi" },
     { name = "matplotlib" },
     { name = "mplfinance" },
+    { name = "pillow" },
     { name = "uvicorn" },
 ]
 
@@ -380,6 +381,7 @@ requires-dist = [
     { name = "fastapi" },
     { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "mplfinance", specifier = ">=0.12.10b0" },
+    { name = "pillow", specifier = ">=12.1.0" },
     { name = "uvicorn" },
 ]
 

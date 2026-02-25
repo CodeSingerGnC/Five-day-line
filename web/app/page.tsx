@@ -1,36 +1,47 @@
 "use client";
 
-import { useState } from "react";
-import useSWR from "swr";
-import { CandlestickChart } from "@/components/chart/CandlestickChart";
-import { Card, Title, Text } from "@tremor/react";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import StockCard from "@/components/card/StockCard";
 
 export default function Home() {
-  // 默认使用平安银行作为演示
-  const [symbol, setSymbol] = useState("000001.SZ");
-  const today = new Date().toISOString().split("T")[0];
-  const lastYear = new Date(new Date().setFullYear(new Date().getFullYear() - 1))
-    .toISOString()
-    .split("T")[0];
-
-  const { data: bars, error } = useSWR(
-    `http://localhost:8000/api/v1/market/bars/${symbol}?start=${lastYear}&end=${today}`,
-    fetcher
-  );
-
-  if (error) return <div>Failed to load data</div>;
-  if (!bars) return <div>Loading...</div>;
+  const tabs = ["推荐", "行业", "主题", "热门", "关注"];
+  const symbols = [
+    "000001.SZ",
+    "600000.SH",
+    "600519.SH",
+    "000333.SZ",
+    "300750.SZ",
+    "601318.SH",
+    "601012.SH",
+    "000858.SZ",
+    "000002.SZ",
+  ];
 
   return (
-    <main className="p-12">
-      <Title>A股行情可视化</Title>
-      <Text>展示最近一年的日线数据</Text>
-
-      <Card className="mt-6">
-        <CandlestickChart data={bars} />
-      </Card>
-    </main>
+    <div className="space-y-4">
+      <div className="no-scrollbar sticky top-14 z-10 -mx-2 overflow-x-auto border-b border-zinc-800 bg-zinc-950/70 px-2 py-3 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center gap-2">
+          {tabs.map((t, i) => (
+            <button
+              key={t}
+              className={[
+                "whitespace-nowrap rounded-full px-5 py-1.5 text-sm transition",
+                i === 0
+                  ? "bg-zinc-100 text-zinc-900 shadow"
+                  : "bg-[#17191C] text-zinc-300 hover:bg-[#1D1F22]",
+              ].join(" ")}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="mx-auto max-w-6xl rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {symbols.map((s) => (
+          <StockCard key={s} symbol={s} />
+        ))}
+        </div>
+      </div>
+    </div>
   );
 }
