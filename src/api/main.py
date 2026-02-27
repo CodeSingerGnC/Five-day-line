@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routers import market
+from api.routers import market, limit_up
+from trading.data.database import init_database
 
 app = FastAPI(
     title="Five-Day-Line Trading API",
@@ -19,6 +20,12 @@ app.add_middleware(
 
 # 注册路由
 app.include_router(market.router, prefix="/api/v1")
+app.include_router(limit_up.router, prefix="/api/v1")
+
+# 启动时初始化数据库
+@app.on_event("startup")
+async def startup_event():
+    init_database()
 
 
 @app.get("/")

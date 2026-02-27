@@ -55,8 +55,8 @@ class AkshareProvider(DataProvider):
         for _, row in sz.iterrows():
             out.append(
                 Security(
-                    symbol=f"{row['code']}.SZ",
-                    name=row["name"],
+                    symbol=f"{row['A股代码']}.SZ",
+                    name=row["A股简称"],
                     exchange="SZSE",
                     list_date=None,  # akshare 此接口暂未提供上市日期
                 )
@@ -66,8 +66,8 @@ class AkshareProvider(DataProvider):
         for _, row in sh.iterrows():
             out.append(
                 Security(
-                    symbol=f"{row['code']}.SH",
-                    name=row["name"],
+                    symbol=f"{row['证券代码']}.SH",
+                    name=row["证券简称"],
                     exchange="SSE",
                     list_date=None,
                 )

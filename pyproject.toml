@@ -11,6 +11,8 @@ dependencies = [
     "mplfinance>=0.12.10b0",
     "pillow>=12.1.0",
     "uvicorn",
+    "sqlalchemy>=2.0.0",
+    "alembic>=1.13.0",
 ]
 
 [dependency-groups]
@@ -20,4 +22,5 @@ dev = [
     "pandas-stubs>=3.0.0.260204",
     "pytest>=9.0.2",
     "ruff>=0.15.0",
+    "httpx>=0.25.0",
 ]
