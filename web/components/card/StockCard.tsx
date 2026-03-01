@@ -142,36 +142,30 @@ export default function StockCard({ symbol }: { symbol: string }) {
 
   return (
     <article
-      className={`flex h-[320px] flex-col overflow-hidden rounded-2xl border ${
-        currentSnapshot?.is_limit_up ? 'border-rose-500 bg-rose-950/20' : 'border-zinc-800 bg-zinc-900'
+      className={`group flex flex-col md:flex-row min-h-[220px] items-stretch overflow-hidden rounded-2xl border ${
+        currentSnapshot?.is_limit_up ? "border-rose-500 bg-rose-950/20" : "border-[var(--border)] bg-[var(--panel)]"
       }`}
-      role="group"
+      role="region"
       aria-label={symbol}
     >
-      <div className="grid grid-cols-3 border-b border-zinc-800 p-3">
-        <div className="col-span-1">
+      <div className="flex w-full md:w-80 flex-col justify-between border-b md:border-b-0 md:border-r border-[var(--border)] p-4">
+        <div>
           <div className="flex items-center gap-1">
             <span className="text-xs text-zinc-400">{symbol}</span>
-            {currentSnapshot?.is_limit_up && (
-              <TrendingUp className="h-3 w-3 text-rose-400" />
-            )}
+            {currentSnapshot?.is_limit_up && <TrendingUp className="h-3 w-3 text-rose-400" />}
           </div>
-          <div className="pt-1 text-2xl font-semibold">{metrics.price}</div>
+          <div className="pt-1 text-3xl font-semibold">{metrics.price}</div>
           <div
             className={[
-              "text-xs",
+              "text-sm",
               (metrics.pct as string).includes("-") ? "text-emerald-400" : "text-rose-400",
             ].join(" ")}
           >
             {metrics.pct}
           </div>
-          {currentSnapshot && (
-            <div className="mt-1 text-xs text-zinc-400">
-              涨停价: {metrics.limitPrice}
-            </div>
-          )}
+          {currentSnapshot && <div className="mt-1 text-xs text-zinc-400">涨停价: {metrics.limitPrice}</div>}
         </div>
-        <div className="col-span-1 space-y-1">
+        <div className="mt-3 space-y-1">
           <div className="flex items-center justify-between text-xs text-zinc-400">
             <span>高</span>
             <span className="text-zinc-200">{metrics.high}</span>
@@ -185,26 +179,26 @@ export default function StockCard({ symbol }: { symbol: string }) {
             <span className="text-zinc-200">{metrics.vol}</span>
           </div>
           {currentSnapshot && (
-            <>
-              <div className="flex items-center justify-between text-xs text-zinc-400">
+            <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-200 group-hover:max-h-40 group-hover:opacity-100">
+              <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-zinc-400">
                 <span>封板金额</span>
                 <span className="text-zinc-200">{metrics.sealedAmount}万</span>
-              </div>
-              <div className="flex items-center justify-between text-xs text-zinc-400">
                 <span>市值</span>
                 <span className="text-zinc-200">{metrics.marketValue}万亿</span>
+                <span>昨收</span>
+                <span className="text-zinc-200">{bars?.at(-2)?.close ?? "-"}</span>
+                <span>开</span>
+                <span className="text-zinc-200">{bars?.at(-1)?.open ?? "-"}</span>
               </div>
-            </>
+            </div>
           )}
         </div>
-        <div className="col-span-1 flex items-start justify-end">
+        <div className="mt-3 flex items-center gap-2">
           <div className="inline-flex rounded-full border border-zinc-700 p-1">
             <button
               className={[
                 "rounded-full px-3 py-1 text-xs",
-                mode === "minute"
-                  ? "bg-zinc-100 text-zinc-900"
-                  : "text-zinc-300 hover:text-white",
+                mode === "minute" ? "bg-zinc-100 text-zinc-900" : "text-zinc-300 hover:text-white",
               ].join(" ")}
               onClick={() => setMode("minute")}
             >
@@ -213,9 +207,7 @@ export default function StockCard({ symbol }: { symbol: string }) {
             <button
               className={[
                 "rounded-full px-3 py-1 text-xs",
-                mode === "daily"
-                  ? "bg-zinc-100 text-zinc-900"
-                  : "text-zinc-300 hover:text-white",
+                mode === "daily" ? "bg-zinc-100 text-zinc-900" : "text-zinc-300 hover:text-white",
               ].join(" ")}
               onClick={() => setMode("daily")}
             >
@@ -224,16 +216,15 @@ export default function StockCard({ symbol }: { symbol: string }) {
           </div>
         </div>
       </div>
-      
-      <div className="flex-1 p-2">
+      <div className="w-full md:flex-1 p-3">
         {!bars ? (
-          <div className="h-full rounded-lg border border-zinc-800 bg-zinc-950" />
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--bg)]" style={{ aspectRatio: "3 / 2" }} />
         ) : mode === "daily" ? (
-          <div className="h-full rounded-lg border border-zinc-800 bg-zinc-950 p-2">
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--bg)] p-2" style={{ aspectRatio: "3 / 2" }}>
             <CandlestickChart data={chartData} />
           </div>
         ) : (
-          <div className="h-full rounded-lg border border-zinc-800 bg-zinc-950 p-2">
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--bg)] p-2" style={{ aspectRatio: "3 / 2" }}>
             <IntradayChart data={bars} />
           </div>
         )}
@@ -241,4 +232,3 @@ export default function StockCard({ symbol }: { symbol: string }) {
     </article>
   );
 }
-

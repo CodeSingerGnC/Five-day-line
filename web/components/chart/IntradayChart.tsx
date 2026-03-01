@@ -18,7 +18,7 @@ export function IntradayChart({ data }: { data: any[] }) {
         horzLines: { color: "#16191D" },
       },
       width: ref.current.clientWidth,
-      height: 180,
+      height: ref.current.clientHeight || 180,
     });
     chartRef.current = chart;
     const series = chart.addAreaSeries({
@@ -34,7 +34,10 @@ export function IntradayChart({ data }: { data: any[] }) {
     chart.timeScale().fitContent();
     const onResize = () => {
       if (ref.current) {
-        chart.applyOptions({ width: ref.current.clientWidth });
+        chart.applyOptions({
+          width: ref.current.clientWidth,
+          height: ref.current.clientHeight || 180,
+        });
       }
     };
     window.addEventListener("resize", onResize);
@@ -43,6 +46,5 @@ export function IntradayChart({ data }: { data: any[] }) {
       chart.remove();
     };
   }, [data]);
-  return <div ref={ref} className="w-full" />;
+  return <div ref={ref} className="w-full h-full" />;
 }
-

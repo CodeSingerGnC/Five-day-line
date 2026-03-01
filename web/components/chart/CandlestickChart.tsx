@@ -33,6 +33,7 @@ export const CandlestickChart = (props: {
     const handleResize = () => {
       chartRef.current?.applyOptions({
         width: chartContainerRef.current!.clientWidth,
+        height: chartContainerRef.current!.clientHeight || 220,
       });
     };
 
@@ -42,7 +43,7 @@ export const CandlestickChart = (props: {
         textColor,
       },
       width: chartContainerRef.current.clientWidth,
-      height: 400,
+      height: chartContainerRef.current.clientHeight || 220,
     });
     chartRef.current = chart;
 
@@ -75,5 +76,5 @@ export const CandlestickChart = (props: {
     };
   }, [data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor]);
 
-  return <div ref={chartContainerRef} className="w-full" />;
+  return <div ref={chartContainerRef} className="w-full h-full" />;
 };

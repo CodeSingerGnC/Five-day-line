@@ -154,7 +154,7 @@ export default function Home() {
       )}
       
       <div className="mx-auto max-w-6xl rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4">
         {symbols.map((s) => (
           <StockCard key={s} symbol={s} />
         ))}
